@@ -1,28 +1,30 @@
 ---
-author: David Gageot & Djordje Lukic
+author: David Gageot & Djordje Lukić
 paging: Slide %d / %d
 ---
 
-# Docker Agent, le couteau suisse agentique de Docker.
+# Docker Agent, le Couteau Suisse Agentique de Docker.
 
 L’IA révolutionne nos métiers autour du développement.
 Chez Docker, nous jouons les éclaireurs et changeons totalement
 notre façon de travailler. 
 
-Pour ce faire, nous avons créé `Docker Agent`. un framework agentique qui
-vous aide à créer vos propres agents. Des agents de code, mais pas seulement.
+Pour ce faire, nous avons créé `Docker Agent`. un framework agentique pour
+créer vos propres agents.
 
-Le tout en open source, model-agnostic, souvent sans une ligne de code.
+Des agents de code, mais pas seulement.
+
+Le tout Open-Source, Model-Agnostic, souvent sans une ligne de code.
 
 ---
 
 # Qui sommes-nous?
 
-**Djordje Lukić** - Principal Engineer à Docker
+**Djordje Lukić** - Principal Engineer - Docker
 
-**David Gageot** - Senior Principal Engineer à Docker
+**David Gageot** - Senior Principal Engineer - Docker
 
-Sujets IA depuis 1 an et demi
+Produits IA depuis 1 an et demi
 
 + Gordon
 + MCP Gateway
@@ -34,19 +36,19 @@ Sujets IA depuis 1 an et demi
 
 # L'IA depuis un an et demi
 
-L'impression d'une éternité.
+L'impression d'une éternité !
 
-+ Débuts sur Gordon avec llama3.1 puis gpt-4o
++ Débuts sur Gordon avec llama3 puis gpt-4o
 + Pas de MCP
-+ Pas de Claude
-+ Copilot
++ Pas de Claude Code
++ Débuts de Copilot
 + Des chat bots mais pas d'agents
-+ Coder avec l'IA est possible mais route semée d'embuches
++ Coder avec l'IA est possible mais une route semée d'embûches
 + Prémices du vibe-coding
 
 ---
 
-# Maintenant
+# Et maintenant?
 
 Un monde nouveau.
 
@@ -61,44 +63,47 @@ Un monde nouveau.
 
 # Docker Agent
 
-+ Un couteau suisse
-+ Ouvert (OpenAI, Anthropic, Google, Mistral, DMR, ...)
-+ Open-source
-+ Docker Agent est codé principalement avec Docker Agent
++ Un Couteau Suisse
++ Open-Source
++ Ouvert: OpenAI, Anthropic, Google, Mistral, DMR, ...
++ `Docker Agent` est codé principalement avec `Docker Agent`
 + Utilisable sans une ligne de code
-+ Utilisé en production pour Gordon
++ Utilisé par Docker en production pour Gordon
 
 ---
 
 # Demo - Pirate
 
-Docker Agent sert à définir tout type d'agent.
+`Docker Agent` sert à définir tout type d'agent.
 
 + Sans une ligne de code
 + Du plus utile au moins utile.
 
-Un exemple inutile:
+Un exemple totalement inutile:
 
 ```bash
-docker agent run pirate
+$ docker agent run pirate
 ```
 ---
 
 # Demo - Coding Agent
 
-Docker Agent est aussi un excellent Coding Agent.
+`Docker Agent` est un excellent Coding Agent.
+
+`Docker Agent` est codé principalement avec `Docker Agent`
 
 + Multi-agents
-+ Multi-model
++ Multi-modèles
 + Skills
 + Built-in tools
 + MCP
 + AGENTS.md
 + Web search
++ RAG
 + ...
 
 ```bash
-docker agent run coder
+$ docker agent run coder
 ```
 
 Mais vous devriez créer le votre.
@@ -109,25 +114,20 @@ Mais vous devriez créer le votre.
 
 Définir un agent principal en YAML.
 
-- Ici, avec un modèle Anthropic mais peut être (OpenAI, Gemini, DMR, Ollama, Mistral, OpenAI compatible...)
-- Tous les tools nécessaires
++ Ici, avec un modèle Anthropic
++ Peut être (OpenAI, Gemini, Docker Model Runner, Ollama, Mistral, OpenAI compatible...)
++ Tous les tools nécessaires
 
 ```yaml
-models:
-  sonnet:
-    provider: anthropic
-    model: claude-sonnet-4-6
-
 agents:
   root:
-    model: sonnet
-    instruction: Help with code-related tasks by examining, modifying, and validating code changes...
+    model: anthropic/claude-sonnet-4-6
+    instruction: |
+      Help with code-related tasks by examining, modifying, and
+      validating code changes...
     skills: true
-    add_environment_info: true
     add_prompt_files:
       - AGENTS.md
-    sub_agents:
-      - librarian
     toolsets:
       - type: filesystem
       - type: shell
@@ -135,40 +135,45 @@ agents:
       - type: mcp
         command: gopls
         args: ["mcp"]
-        version: "golang/tools@v0.21.0"
-        tools: ["go_workspace", "go_symbol_references", "go_search", "go_rename_symbol", "go_package_api", "go_file_context"]
 ```
 
 ---
 
 # Demo - Ajouter un agent "Planificateur"
 
-```yaml
-models:
-  opus:
-    provider: anthropic
-    model: claude-opus-4-6
-    thinking_budget: adaptive/low
+Ajouter un sous-agent capable de préparer le travail en posant des questions
+à l'utilisateur.
 
+```yaml
 agents:
   planner:
-    model: opus
+    model: anthropic/claude-opus-4-6
     instruction: |
-      You are a planning agent responsible for gathering user requirements and creating a development plan.
-      Always ask clarifying questions to ensure you fully understand the user's needs before creating the plan.
-      Once you have a clear understanding, analyze the existing code and create a detailed development plan in a markdown file. Do not write any code yourself.
-      Once the plan is created, you will delegate tasks to the root agent. Make sure to provide the file name of the plan when delegating. Write the plan in the current directory.
-      Use the `user_prompt` tool to ask questions to the user. Prefer Multiple Choice Questions.
+      You are a planning agent responsible for gathering user requirements
+      and creating a development plan.
+      
+      Always ask clarifying questions to ensure you fully understand
+      the user's needs before creating the plan.
+      Once you have a clear understanding, analyze the existing code
+      and create a detailed development plan in a markdown file.
+      Do not write any code yourself.
+
+      Once the plan is created, you will delegate tasks to the root agent.
+      Make sure to provide the file name of the plan when delegating.
+      Write the plan in the current directory.
+
+      Use the `user_prompt` tool to ask questions to the user.
+      Prefer Multiple Choice Questions.
     toolsets:
       - type: filesystem
       - type: user_prompt
-    sub_agents:
-      - root
 ```
 
 ---
 
 # Demo - Ajouter un agent de "Bibliothecaire"
+
+Pour faire des recherches Web ou obtenir des informations sur les APIs.
 
 ```yaml
 models:
@@ -182,11 +187,39 @@ agents:
   librarian:
     model: gemini
     instruction: |
-      You are the librarian, your job is to look for relevant documentation to help the golang developer agent.
-      When given a query, search the internet for relevant documentation, articles, or resources that can assist in completing the task.
+      You are the librarian, your job is to look for relevant documentation
+      to help the golang developer agent.
+
+      When given a query, search the internet for relevant documentation,
+      articles, or resources that can assist in completing the task.
+
       Use context7 for searching documentation.
     toolsets:
       - type: fetch
       - type: mcp
         ref: docker:context7
 ```
+
+---
+
+# Demo - Version finale
+
+```bash
+$ docker agent run ./coder.yaml
+```
+
+---
+
+# Demo - Un agent minimaliste (Pokemon!)
+
+---
+
+# Demo - Go SDK
+
+---
+
+# Questions
+
+Q/A
+
+

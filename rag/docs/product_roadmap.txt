@@ -1,0 +1,73 @@
+# Acme Corp — Product Roadmap & Strategy
+
+## Company Overview
+**Founded:** 2019 | **Employees:** 287 | **ARR:** $42M (Q1 2025)
+**Mission:** Simplify supply chain visibility for mid-market manufacturers.
+
+## Product Suite
+
+### SupplyView (Core Product)
+Real-time supply chain visibility platform.
+- **Launched:** 2020
+- **Customers:** 340+ mid-market manufacturers
+- **Key features**: Real-time inventory tracking, supplier risk scoring,
+  demand forecasting, automated purchase order generation
+- **Tech stack**: Go backend, React frontend, PostgreSQL, Kafka, deployed on EKS
+
+### SupplyView Analytics (Launched Q3 2024)
+Advanced analytics and reporting add-on.
+- **Adoption**: 45% of existing customers
+- **Features**: Custom dashboards, predictive analytics, anomaly detection,
+  exportable reports (PDF, CSV, API)
+- **Tech stack**: Python (ML models), Go (API layer), ClickHouse (analytics DB)
+
+### SupplyView Connect (Beta, Q1 2025)
+Supplier collaboration portal.
+- **Status**: Private beta with 20 customers
+- **Features**: Supplier onboarding, document exchange, compliance tracking,
+  real-time messaging between buyers and suppliers
+- **GA target**: Q3 2025
+
+## 2025 Roadmap
+
+### Q1 2025 (Completed)
+- ✅ SupplyView Connect private beta launch
+- ✅ SOC 2 Type II audit passed
+- ✅ Migrated last 3 monolith services to microservices
+- ✅ Launched EU region (eu-west-1) for GDPR data residency
+
+### Q2 2025 (Current)
+- 🔄 AI-powered demand forecasting v2 (improved accuracy from 78% to target 90%)
+- 🔄 Mobile app (iOS and Android) for warehouse managers
+- 🔄 Webhook platform for customer integrations
+- 🔄 SSO/SCIM support for Enterprise tier
+
+### Q3 2025
+- SupplyView Connect GA launch
+- Multi-language support (Spanish, German, French, Mandarin)
+- Advanced role-based access control (RBAC)
+- API rate limiting tiers aligned with pricing plans
+
+### Q4 2025
+- EDI (Electronic Data Interchange) integration for large manufacturers
+- Carbon footprint tracking module
+- FedRAMP authorization (for US government contracts)
+- Series C fundraising preparation
+
+## Pricing Tiers
+
+| Tier | Price | Included | Target |
+|------|-------|----------|--------|
+| Starter | $2,500/mo | 50 suppliers, 5 users, core visibility | Small manufacturers |
+| Professional | $7,500/mo | 200 suppliers, 25 users, analytics add-on | Mid-market |
+| Enterprise | $20,000+/mo | Unlimited, dedicated support, SLA, SSO | Large manufacturers |
+
+## Key Metrics (Q1 2025)
+
+- **ARR**: $42M (+68% YoY)
+- **Net Revenue Retention**: 125%
+- **Gross Margin**: 78%
+- **Customer Count**: 340
+- **Churn Rate**: 3.2% annual (logo churn)
+- **NPS**: 62
+- **Average Contract Value**: $123,500/year

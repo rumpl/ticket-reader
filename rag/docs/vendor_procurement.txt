@@ -1,0 +1,54 @@
+# Acme Corp — Vendor & Procurement Policy
+
+## Approved Vendors (PROC-POL-001)
+**Last Updated:** March 2025
+
+### Cloud & Infrastructure
+| Vendor | Service | Contract Renewal | Annual Cost |
+|--------|---------|-----------------|-------------|
+| AWS | Primary cloud | September 2026 | $3.36M |
+| Datadog | Monitoring (legacy, migrating off) | June 2025 | $185,000 |
+| Grafana Cloud | Monitoring (replacing Datadog) | January 2027 | $95,000 |
+| HashiCorp | Vault, Terraform, Consul | March 2026 | $120,000 |
+| Confluent | Managed Kafka (MSK support) | November 2025 | $78,000 |
+
+### Developer Tools
+| Vendor | Service | Contract Renewal | Annual Cost |
+|--------|---------|-----------------|-------------|
+| GitHub | Source control, CI/CD | December 2025 | $64,000 |
+| LaunchDarkly | Feature flags | April 2026 | $30,000 |
+| Snyk | Dependency scanning | July 2025 | $42,000 |
+| JetBrains | IDE licenses (GoLand, IntelliJ) | February 2026 | $28,000 |
+| Linear | Issue tracking | August 2025 | $18,000 |
+
+### Business & Productivity
+| Vendor | Service | Contract Renewal | Annual Cost |
+|--------|---------|-----------------|-------------|
+| Google Workspace | Email, Docs, Meet | January 2026 | $156,000 |
+| Slack | Team communication | March 2026 | $98,000 |
+| Notion | Documentation & wiki | October 2025 | $24,000 |
+| Figma | Design tooling | June 2026 | $36,000 |
+| BambooHR | HR management | September 2025 | $22,000 |
+
+## Procurement Process (PROC-POL-002)
+
+### Spending Thresholds
+- **< $5,000/year**: Manager approval, no procurement involvement
+- **$5,000 – $25,000/year**: Manager + Director approval, procurement review
+- **$25,000 – $100,000/year**: VP approval, procurement-led negotiation, legal review
+- **> $100,000/year**: C-level approval, board notification, competitive RFP required
+
+### Vendor Evaluation Criteria
+All new vendors scoring above $25,000/year must be evaluated on:
+1. **Security posture** — SOC 2 Type II required, ISO 27001 preferred
+2. **Data residency** — Must support EU data residency for GDPR compliance
+3. **SLA** — Minimum 99.9% uptime guarantee
+4. **Exit strategy** — Data export capability and contractual termination terms
+5. **Integration** — API availability, SSO/SAML support
+
+### Security Review
+Vendors handling Confidential or Restricted data (see POL-SEC-002) must complete:
+- Security questionnaire (SIG Lite or equivalent)
+- Penetration test results (within last 12 months)
+- DPA (Data Processing Agreement) signed
+- Annual review by Security team

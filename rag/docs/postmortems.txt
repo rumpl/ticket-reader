@@ -1,0 +1,120 @@
+# Acme Corp — Post-Mortems & Incident History
+
+## POST-MORTEM-2025-007: Payment Processing Outage
+**Date:** March 12, 2025 | **Duration:** 47 minutes | **Severity:** P1
+**Incident Commander:** Alex Rivera
+
+### Summary
+Payment processing was unavailable for 47 minutes due to an expired TLS
+certificate on the internal gateway between our API and Stripe.
+
+### Timeline (UTC)
+- 14:02 — PagerDuty alert: Payment Service error rate >5%
+- 14:05 — On-call acknowledged, began investigation
+- 14:12 — Identified TLS handshake failures in payment-gateway logs
+- 14:18 — Root cause confirmed: certificate expired at 14:00 UTC
+- 14:23 — Emergency certificate rotation initiated via Vault
+- 14:35 — New certificate deployed, payment-gateway pods restarted
+- 14:49 — Error rate returned to baseline, incident resolved
+
+### Impact
+- 1,247 failed payment attempts
+- 89 customers affected
+- $340,000 in delayed transactions (all recovered within 2 hours)
+- 12 support tickets opened
+
+### Root Cause
+The payment-gateway TLS certificate was manually provisioned 12 months ago
+outside of the automated cert-manager workflow. It was not tracked in our
+certificate inventory and had no expiration alert.
+
+### Action Items
+| # | Action | Owner | Deadline | Status |
+|---|--------|-------|----------|--------|
+| 1 | Migrate all remaining manual certs to cert-manager | SRE Squad | April 2025 | ✅ Done |
+| 2 | Add cert expiry dashboard in Grafana | Platform Squad | March 2025 | ✅ Done |
+| 3 | Weekly automated scan for certs expiring within 30 days | Security Squad | April 2025 | ✅ Done |
+| 4 | Update runbook with certificate emergency rotation steps | Alex Rivera | March 2025 | ✅ Done |
+
+---
+
+## POST-MORTEM-2025-003: Kafka MirrorMaker Lag During DR Test
+**Date:** January 18, 2025 | **Duration:** N/A (DR test) | **Severity:** P3
+**Incident Commander:** Jordan Kim
+
+### Summary
+During the semi-annual DR failover drill, Kafka MirrorMaker 2 replication
+lag exceeded the 5-minute SLA, peaking at 12 minutes for high-throughput
+topics. This would have caused data loss exceeding the Tier 1 RPO of 15 minutes
+under sustained production load.
+
+### Root Cause
+MirrorMaker consumer group was configured with default parallelism (3 consumers)
+which was insufficient for the current production event volume (~45,000 events/sec
+across critical topics, up from ~20,000 when originally configured).
+
+### Action Items
+| # | Action | Owner | Deadline | Status |
+|---|--------|-------|----------|--------|
+| 1 | Increase MirrorMaker consumers to 9 (match source partition count) | SRE Squad | January 2025 | ✅ Done |
+| 2 | Add replication lag alerting (>2 min = P2, >5 min = P1) | Platform Squad | February 2025 | ✅ Done |
+| 3 | Monthly automated replication lag check under simulated load | SRE Squad | Ongoing | 🔄 Active |
+| 4 | Document MirrorMaker scaling procedure in runbook | Jordan Kim | February 2025 | ✅ Done |
+
+---
+
+## POST-MORTEM-2024-019: Search Service Cascading Failure
+**Date:** November 3, 2024 | **Duration:** 2 hours 15 minutes | **Severity:** P2
+**Incident Commander:** Pat Kumar
+
+### Summary
+The Search Service experienced a cascading failure triggered by an OpenSearch
+cluster rebalancing event. A node replacement caused shard reallocation which
+increased query latency from 50ms to 8 seconds, exhausting connection pools
+in upstream services.
+
+### Timeline (UTC)
+- 09:15 — OpenSearch automated node replacement triggered (routine maintenance)
+- 09:18 — Shard reallocation began, cluster entered yellow state
+- 09:25 — Search query latency increased to 2 seconds
+- 09:32 — API Gateway connection pool to Search Service exhausted
+- 09:35 — Cascading timeout failures in Inventory and Procurement services
+- 09:40 — PagerDuty P2 alert triggered
+- 09:55 — Circuit breaker manually enabled, degraded search experience served
+- 10:45 — OpenSearch cluster stabilized, shard reallocation complete
+- 11:30 — Full service restored, circuit breaker disabled
+
+### Impact
+- Search functionality degraded for 2 hours 15 minutes
+- Inventory and Procurement services intermittently slow for 45 minutes
+- 34 customer-reported issues
+- No data loss
+
+### Root Cause
+1. OpenSearch maintenance window overlapped with peak usage hours
+2. No circuit breaker configured for Search Service calls
+3. Connection pool settings were too aggressive (no timeout backoff)
+
+### Action Items
+| # | Action | Owner | Deadline | Status |
+|---|--------|-------|----------|--------|
+| 1 | Implement circuit breaker pattern for all cross-service calls | Architecture | Q1 2025 | ✅ Done |
+| 2 | Move OpenSearch maintenance to off-peak (Saturday 02:00-06:00 UTC) | SRE Squad | November 2024 | ✅ Done |
+| 3 | Add connection pool exhaustion metrics and alerts | Platform Squad | December 2024 | ✅ Done |
+| 4 | Implement graceful degradation for search (return cached results) | Search Squad | Q1 2025 | ✅ Done |
+| 5 | Load test search service under OpenSearch degraded conditions | SRE Squad | Q1 2025 | ✅ Done |
+
+---
+
+## Incident Statistics (Last 12 Months)
+
+| Severity | Count | Avg Duration | Avg Detection Time |
+|----------|-------|-------------|-------------------|
+| P1 | 3 | 38 minutes | 4 minutes |
+| P2 | 8 | 1 hour 45 min | 12 minutes |
+| P3 | 22 | 3 hours 20 min | 25 minutes |
+| P4 | 47 | N/A (resolved async) | N/A |
+
+**Mean Time to Detect (MTTD):** 8 minutes (P1/P2)
+**Mean Time to Resolve (MTTR):** 52 minutes (P1/P2)
+**Availability (trailing 12 months):** 99.97%

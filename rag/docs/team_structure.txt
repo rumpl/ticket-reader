@@ -1,0 +1,105 @@
+# Acme Corp — Team Structure & Organization
+
+## Engineering Organization
+**VP Engineering:** Pat Kumar | **CTO:** Raj Patel | **Total Engineering:** 142
+
+### Platform Team (18 engineers)
+**Lead:** Alex Rivera (SRE Lead)
+- **SRE Squad** (6): Infrastructure reliability, on-call, incident response
+- **Platform Squad** (7): Kubernetes, CI/CD, developer experience, internal tooling
+- **Security Squad** (5): AppSec, compliance automation, vulnerability management
+
+**Responsibilities:**
+- Maintain shared Go libraries and service templates
+- Own CI/CD pipeline and deployment infrastructure
+- Manage Kubernetes clusters, Kafka, databases
+- Run chaos engineering and DR exercises
+- Provide golden path for new service creation (<30 min to first deploy)
+
+### Product Engineering (96 engineers, 8 squads)
+
+#### Supply Chain Domain (4 squads)
+- **Inventory Squad** (12): Real-time inventory tracking, warehouse integrations
+- **Procurement Squad** (12): Purchase orders, supplier management, approval workflows
+- **Logistics Squad** (12): Shipping, tracking, carrier integrations (FedEx, UPS, DHL)
+- **Forecasting Squad** (12): Demand prediction ML models, planning tools
+
+#### Analytics Domain (2 squads)
+- **Insights Squad** (12): Dashboards, custom reports, data export
+- **Data Pipeline Squad** (12): ETL, ClickHouse, data warehouse, batch processing
+
+#### Collaboration Domain (2 squads)
+- **Connect Squad** (12): SupplyView Connect (supplier portal), messaging
+- **Integration Squad** (12): Webhooks, API platform, EDI, third-party connectors
+
+### Architecture & Staff Engineers (8)
+- **Chief Architect**: Maria Santos
+- Review all ADRs and cross-team technical decisions
+- Maintain system design documentation
+- Lead quarterly architecture reviews
+- Mentor senior engineers toward staff/principal track
+
+### Engineering Managers (20)
+- Each squad has a dedicated EM
+- EM:engineer ratio target is 1:6
+- EMs do not write production code (focus on people and process)
+- Weekly EM sync led by VP Engineering
+
+## Product & Design (32 people)
+
+### Product Management (12)
+**Head of Product:** Nina Okoro
+- 1 PM per engineering squad
+- PMs own roadmap prioritization and customer discovery
+- Weekly product review with CEO
+
+### Design (10)
+**Head of Design:** Sam Reeves
+- 2 product designers per domain
+- 2 UX researchers
+- Design system maintained in Figma (AcmeDS)
+
+### Technical Writing (4)
+- API documentation (OpenAPI specs, developer portal)
+- Customer-facing help center (Notion-based)
+- Internal runbooks and onboarding guides
+
+### Data Science (6)
+**Lead:** Dr. Priya Sharma
+- Forecasting models (Python, scikit-learn, PyTorch)
+- Customer churn prediction
+- Pricing optimization
+- Embedded in Forecasting and Insights squads
+
+## Go-To-Market (82 people)
+
+### Sales (35)
+- **VP Sales:** Tom Bradley
+- 15 Account Executives (mid-market and enterprise)
+- 10 SDRs (outbound prospecting)
+- 5 Sales Engineers (technical demos and POCs)
+- 5 Sales Operations (CRM, quotas, forecasting)
+
+### Customer Success (25)
+- **Head of CS:** Dana Walsh
+- 12 Customer Success Managers (1:25 customer ratio)
+- 8 Support Engineers (Tier 1 and Tier 2)
+- 3 Implementation Specialists (onboarding)
+- 2 Renewal Managers
+
+### Marketing (22)
+- **VP Marketing:** Chris Lee
+- 6 Demand Generation
+- 4 Content Marketing
+- 3 Product Marketing
+- 3 Events & Partnerships
+- 2 Brand & Creative
+- 2 Marketing Operations
+- 2 Developer Relations
+
+## G&A (31 people)
+- **Finance** (8): Controller, FP&A, AP/AR, billing
+- **HR** (7): People ops, recruiting (4 recruiters), L&D
+- **Legal** (4): General counsel, contracts, privacy, IP
+- **IT** (8): Corporate IT, endpoint management, office infrastructure
+- **Office/Admin** (4): Office management (SF and NYC offices)

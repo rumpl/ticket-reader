@@ -1,0 +1,92 @@
+# Acme Corp — HR Policies & Employee Handbook
+
+## Time Off Policy (HR-POL-001)
+**Effective Date:** January 2025
+
+### Paid Time Off (PTO)
+- **0-2 years tenure**: 22 days/year
+- **2-5 years tenure**: 27 days/year
+- **5+ years tenure**: 32 days/year
+- PTO does not roll over beyond 5 days into the next year
+- Requests via BambooHR, approved by direct manager
+- Minimum 2 weeks notice for vacations >3 consecutive days
+
+### Sick Leave
+- 10 days/year, separate from PTO
+- No documentation required for ≤3 consecutive days
+- Medical certificate required for >3 consecutive days
+- Unused sick days do not roll over or pay out
+
+### Parental Leave
+- **Primary caregiver**: 16 weeks fully paid
+- **Secondary caregiver**: 6 weeks fully paid
+- Can be taken within 12 months of birth/adoption
+- Gradual return option: 80% schedule at full pay for 4 weeks after return
+
+## Remote Work Policy (HR-POL-002)
+
+Acme Corp operates a **hybrid-first** model:
+- Minimum **2 days per week in office** (Tuesday and Thursday are anchor days)
+- Fully remote positions available for approved roles (Engineering, Design, Data)
+- International remote work allowed up to 30 days/year (tax compliance requirement)
+- Home office stipend: $1,500 one-time setup + $75/month for internet
+
+### Equipment
+All employees receive:
+- MacBook Pro (M4, 36GB RAM) or ThinkPad X1 Carbon (employee choice)
+- 27" external monitor
+- Keyboard, mouse, headset
+- Equipment must be returned within 14 days of last working day
+
+## Compensation & Benefits (HR-POL-003)
+
+### Salary Reviews
+- Annual review cycle in March
+- Based on performance rating, market data, and internal equity
+- Merit increase budget: typically 4-6% of payroll
+
+### Benefits
+- **Health insurance**: 100% employee premium covered, 80% for dependents
+- **Dental & Vision**: Included in health plan
+- **401(k)**: 4% company match, immediate vesting
+- **Life insurance**: 2x annual salary
+- **Professional development**: $3,000/year per employee
+- **Wellness stipend**: $100/month (gym, mental health apps, etc.)
+
+### Equity
+- All full-time employees receive stock options at hire
+- 4-year vesting schedule with 1-year cliff
+- Refresh grants based on performance (annual review)
+
+## Performance Management (HR-POL-004)
+
+### Review Cycle
+- **Quarterly check-ins**: Lightweight goal progress review with manager
+- **Annual review** (March): Comprehensive evaluation with calibration
+- **Rating scale**: Exceeds / Meets / Developing / Below Expectations
+
+### Performance Improvement Plan (PIP)
+- Triggered by "Below Expectations" rating or manager discretion
+- Duration: 30-60 days with clear, measurable goals
+- Weekly check-ins with manager and HR
+- Successful completion returns employee to regular standing
+- Unsuccessful completion may result in termination
+
+## Onboarding Process (HR-POL-005)
+
+### Week 1
+- Day 1: Welcome session, equipment setup, security training
+- Day 2: Product overview and company strategy presentation
+- Day 3-5: Team introductions, codebase walkthrough (engineering), tool access
+
+### First 30 Days
+- Assigned a buddy from the same team
+- Complete all compliance training (security, anti-harassment, data privacy)
+- Ship first PR or deliverable (engineering roles)
+- 30-day check-in with manager
+
+### First 90 Days
+- Complete onboarding checklist in BambooHR
+- Present a "What I Learned" at team meeting
+- 90-day performance check-in with manager
+- Probation period ends (confirmation of employment)

@@ -1,0 +1,117 @@
+# Acme Corp — Product & Architecture Decision Records
+
+## ADR-001: Migrate from Monolith to Microservices
+**Date:** June 2023 | **Status:** Accepted
+
+### Context
+The original Rails monolith served us well from 0 to $5M ARR but became a
+bottleneck: deployment cycle was 2 weeks, test suite took 45 minutes, and
+team coupling caused constant merge conflicts.
+
+### Decision
+Incrementally decompose into domain-aligned microservices using the
+Strangler Fig pattern. Services communicate via Kafka events (async)
+and gRPC (sync). Shared PostgreSQL is split per service.
+
+### Consequences
+- Teams can deploy independently (target: multiple deploys/day)
+- Higher operational complexity (mitigated by platform team)
+- Requires investment in observability and service mesh
+- Migration timeline: 18 months (completed December 2024)
+
+---
+
+## ADR-007: Adopt Feature Flags for All User-Facing Changes
+**Date:** January 2024 | **Status:** Accepted
+
+### Context
+Long-lived feature branches caused painful merges and delayed feedback.
+Rollbacks were slow because they required a full redeploy.
+
+### Decision
+All user-facing changes must be behind a feature flag (LaunchDarkly).
+Flags are owned by the feature team and must be cleaned up within
+30 days of full rollout.
+
+### Consequences
+- Enables trunk-based development
+- Instant rollback by toggling flag
+- Risk of flag debt if not cleaned up (enforced by quarterly audit)
+- Cost: ~$2,500/month for LaunchDarkly
+
+---
+
+## ADR-012: Standardize on Go for Backend Services
+**Date:** April 2024 | **Status:** Accepted
+
+### Context
+Backend services were written in Ruby, Python, and Node.js. This
+diversity made it hard to share libraries, enforce standards, and
+rotate engineers between teams.
+
+### Decision
+All new backend services must be written in Go. Existing services
+will be migrated opportunistically (when major refactors are planned).
+Exceptions require Architecture Review Board approval.
+
+### Rationale
+- Strong type system catches bugs at compile time
+- Excellent performance and low memory footprint
+- First-class concurrency support
+- Large ecosystem for cloud-native tooling (Kubernetes, Prometheus, etc.)
+- Team survey showed 70% preference for Go
+
+### Consequences
+- Training investment for engineers coming from dynamic languages
+- Shared Go libraries maintained by the platform team
+- Python retained for ML/data pipelines (exception granted)
+
+---
+
+## ADR-018: Zero-Trust Networking
+**Date:** September 2024 | **Status:** Accepted
+
+### Context
+Traditional perimeter-based security (VPN + firewall) was insufficient
+for our hybrid workforce and multi-cloud architecture.
+
+### Decision
+Adopt zero-trust architecture:
+- All service-to-service calls require mTLS (enforced by Istio)
+- No implicit trust based on network location
+- Every request is authenticated and authorized
+- BeyondCorp model for employee access (no VPN required)
+
+### Consequences
+- Significantly improved security posture
+- VPN decommissioned (saves $45,000/year)
+- Increased complexity in service configuration
+- Requires robust certificate management (cert-manager + Vault)
+
+---
+
+## ADR-023: Event-Driven Architecture for Cross-Domain Communication
+**Date:** December 2024 | **Status:** Accepted
+
+### Context
+Synchronous API calls between services created tight coupling and
+cascading failures. The order service calling inventory, pricing,
+and notification services synchronously caused frequent timeouts.
+
+### Decision
+Cross-domain communication uses Kafka events. Services publish
+domain events (e.g., `order.created`, `payment.completed`) and
+interested services subscribe. Synchronous calls are only allowed
+within a bounded context.
+
+### Event Schema Standards
+- All events use Avro with Schema Registry
+- Events are immutable facts (past tense naming)
+- Must include: event_id, timestamp, source, correlation_id
+- Schema evolution: backward-compatible changes only
+
+### Consequences
+- Loose coupling between domains
+- Better resilience (services handle events at their own pace)
+- Eventual consistency requires careful UX design
+- Debugging distributed flows requires good tracing (OpenTelemetry)

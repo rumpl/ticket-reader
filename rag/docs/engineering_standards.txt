@@ -1,0 +1,63 @@
+# Acme Corp — Engineering Standards
+
+## Code Review Policy (ENG-STD-001)
+**Last Updated:** March 2025
+
+### Requirements
+- All changes require **at least one approval** before merging
+- Changes to authentication, payments, or data pipelines require **two approvals**,
+  including one from a designated code owner
+- Reviews must be completed within **one business day**
+- Authors must not merge their own PRs (four-eyes principle)
+
+### What Reviewers Check
+1. Correctness and edge cases
+2. Test coverage (minimum 80% for new code)
+3. Security implications (SQL injection, XSS, auth bypasses)
+4. Performance impact
+5. Documentation and changelog updates
+
+## Branching Strategy (ENG-STD-002)
+
+We use **trunk-based development**:
+- `main` is the production branch, always deployable
+- Feature branches are short-lived (max 2 days)
+- Use feature flags for long-running changes
+- Release branches (`release/YYYY.MM.DD`) cut weekly on Tuesdays
+
+## CI/CD Pipeline (ENG-STD-003)
+
+Every PR triggers the following pipeline:
+
+```
+lint → unit tests → build → integration tests → security scan → deploy to staging
+```
+
+- **Lint**: golangci-lint (Go), eslint (TypeScript), ruff (Python)
+- **Unit tests**: Must pass with ≥80% coverage
+- **Security scan**: Snyk for dependencies, Semgrep for SAST
+- **Staging deploy**: Automatic for PRs targeting `main`
+- **Production deploy**: Requires manual approval in ArgoCD
+
+### SLAs
+- CI pipeline must complete in under 15 minutes
+- Flaky test threshold: if a test fails >3 times in 30 days, it is quarantined
+
+## API Design Standards (ENG-STD-004)
+
+- All APIs follow **OpenAPI 3.1** specification
+- Use REST for CRUD, gRPC for internal service-to-service communication
+- Versioning: URL path (`/v1/`, `/v2/`), never query params
+- Rate limiting: 100 req/s per client by default
+- All endpoints must return structured errors:
+  ```json
+  {"error": {"code": "NOT_FOUND", "message": "Resource not found", "request_id": "abc-123"}}
+  ```
+- Breaking changes require a 6-month deprecation notice
+
+## On-Call Rotation (ENG-STD-005)
+
+- Each team maintains a weekly on-call rotation in PagerDuty
+- On-call engineers must acknowledge alerts within **5 minutes** (P1/P2)
+- Handoff happens every Monday at 10:00 AM UTC
+- Compensation: 1 day off per week of on-call, double for holidays

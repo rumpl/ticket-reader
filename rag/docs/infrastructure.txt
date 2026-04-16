@@ -1,0 +1,79 @@
+# Acme Corp — Cloud Infrastructure & Architecture
+
+## Infrastructure Overview (INFRA-001)
+**Last Updated:** February 2025
+
+### Cloud Providers
+- **Primary**: AWS (us-east-1, eu-west-1)
+- **DR Region**: AWS us-west-2 (disaster recovery, warm standby)
+- **Edge**: CloudFront for CDN, Route53 for DNS
+
+### Kubernetes Clusters
+We run **EKS** clusters in each region:
+
+| Cluster | Region | Purpose | Node Count | Instance Type |
+|---------|--------|---------|------------|---------------|
+| prod-east | us-east-1 | Production (primary) | 45-120 (autoscaling) | m7g.2xlarge |
+| prod-eu | eu-west-1 | Production (EU customers) | 30-80 | m7g.2xlarge |
+| prod-dr | us-west-2 | Disaster recovery | 10-30 | m7g.xlarge |
+| staging | us-east-1 | Pre-production | 15-25 | m6g.xlarge |
+| dev | us-east-1 | Development/testing | 8-12 | m6g.large |
+
+### Networking
+- VPCs per region with /16 CIDR blocks
+- Transit Gateway connects all VPCs
+- PrivateLink for AWS service access (no public endpoints)
+- Istio service mesh for inter-service communication
+- Zero-trust networking: all service-to-service calls require mTLS
+
+## Database Architecture (INFRA-002)
+
+### Primary Databases
+- **PostgreSQL 16** (RDS Aurora): Transactional data, customer records
+  - Multi-AZ deployment with read replicas
+  - Automated backups: daily snapshots, 30-day retention
+  - Point-in-time recovery enabled
+- **Redis 7** (ElastiCache): Caching, session storage, rate limiting
+  - Cluster mode with 6 shards
+  - TTL policy: 1 hour default, configurable per service
+- **OpenSearch 2.x**: Full-text search, log analytics
+  - 3 master nodes, 9 data nodes
+  - Index lifecycle: hot (7d) → warm (30d) → cold (90d) → delete
+
+### Data Pipeline
+- **Kafka** (MSK): Event streaming backbone
+  - 9 brokers across 3 AZs
+  - Retention: 7 days default, 30 days for audit topics
+  - Schema Registry enforces Avro schemas
+- **S3 Data Lake**: Long-term analytics storage
+  - Partitioned by date, region, and service
+  - Queried via Athena (ad-hoc) or Spark on EMR (batch)
+
+## Observability Stack (INFRA-003)
+
+### Monitoring
+- **Prometheus + Grafana**: Metrics collection and dashboards
+- **OpenTelemetry**: Distributed tracing (all services instrumented)
+- **PagerDuty**: Alert routing and on-call management
+
+### Logging
+- All services emit structured JSON logs to stdout
+- Collected by Fluent Bit → Kafka → OpenSearch
+- Retention: 90 days in OpenSearch, 1 year in S3 (compressed)
+- **No PII in logs** — enforced by automated scanning
+
+### SLOs and Error Budgets
+| Service | Availability SLO | Latency SLO (p99) | Error Budget (monthly) |
+|---------|------------------|--------------------|----------------------|
+| API Gateway | 99.95% | 200ms | 21.6 minutes |
+| Auth Service | 99.99% | 100ms | 4.3 minutes |
+| Payment Service | 99.99% | 500ms | 4.3 minutes |
+| Search Service | 99.9% | 300ms | 43.2 minutes |
+
+## Cost Management (INFRA-004)
+
+- Monthly cloud spend: ~$280,000
+- Reserved Instances cover 70% of baseline compute
+- Spot instances for CI/CD and batch workloads (60% savings)
+- Kubecost tracks per-team and per-service spend
+- Teams exceeding budget by >15% require VP approval for the following month

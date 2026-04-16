@@ -1,0 +1,67 @@
+# Acme Corp — Disaster Recovery & Business Continuity
+
+## DR Strategy (DR-001)
+**Last Updated:** February 2025 | **RPO:** 1 hour | **RTO:** 4 hours
+
+### Recovery Tiers
+
+| Tier | Systems | RPO | RTO | Strategy |
+|------|---------|-----|-----|----------|
+| Tier 1 (Critical) | API Gateway, Auth, Payments, Core DB | 15 min | 1 hour | Hot standby in DR region |
+| Tier 2 (Important) | Analytics, Search, Notifications | 1 hour | 4 hours | Warm standby |
+| Tier 3 (Standard) | Internal tools, CI/CD, Dev environments | 24 hours | 48 hours | Cold backup, rebuild from IaC |
+
+### Backup Strategy
+- **Aurora PostgreSQL**: Continuous replication to DR region, point-in-time recovery
+- **Redis**: Snapshot every 15 minutes, replicated cross-region
+- **Kafka**: MirrorMaker 2 replicates critical topics to DR cluster
+- **S3**: Cross-region replication enabled for all production buckets
+- **Secrets (Vault)**: Active-active replication across regions
+- **Infrastructure-as-Code**: All infra defined in Terraform, stored in GitHub
+  (can rebuild any environment from scratch in <2 hours)
+
+### Failover Procedures
+
+#### Automated Failover
+- Route53 health checks trigger DNS failover for API endpoints
+- Aurora automatically promotes read replica in DR region
+- Kubernetes workloads rescheduled via cluster federation
+
+#### Manual Failover (Requires On-Call + SRE Lead)
+1. Confirm primary region is unrecoverable (>15 min outage of Tier 1 services)
+2. Notify incident commander and leadership via PagerDuty escalation
+3. Execute `make failover-dr` from the infra-ops repository
+4. Verify data integrity checks pass (automated suite)
+5. Update status page (status.acmecorp.com)
+6. Monitor for 2 hours before declaring stable
+
+### DR Testing
+- **Monthly**: Automated backup restoration tests (all tiers)
+- **Quarterly**: Tier 2/3 failover exercise
+- **Semi-annually**: Full DR failover drill (Tier 1 included, 4-hour window on Saturday)
+- **Annually**: Chaos engineering game day (random failure injection in production)
+
+Last full DR test: January 2025 — Completed successfully in 3 hours 12 minutes.
+Issue found: Kafka MirrorMaker lag exceeded 5 minutes under load. Fixed by
+increasing consumer parallelism (see POST-MORTEM-2025-003).
+
+## Business Continuity (DR-002)
+
+### Communication Plan
+- **Primary**: Slack (#incident-war-room)
+- **Backup**: Google Meet (standing bridge: meet.google.com/acme-incident)
+- **Tertiary**: Phone tree (stored in PagerDuty, updated quarterly)
+- **External**: StatusPage (status.acmecorp.com), customer email via SendGrid
+
+### Key Personnel
+| Role | Primary | Backup |
+|------|---------|--------|
+| Incident Commander | VP Engineering (Pat Kumar) | SRE Lead (Alex Rivera) |
+| Communications Lead | Head of CS (Dana Walsh) | Marketing Dir (Chris Lee) |
+| Technical Lead | SRE Lead (Alex Rivera) | Senior SRE (Jordan Kim) |
+| Executive Sponsor | CTO (Raj Patel) | CEO (Lisa Nguyen) |
+
+### Pandemic / Office Disruption
+- All critical systems accessible remotely (zero-trust, no VPN dependency)
+- BCP tested during COVID-19; company operated fully remote for 18 months
+- Critical functions can operate indefinitely in remote-only mode

@@ -1,0 +1,72 @@
+# This example demonstrates using a local model (via Ollama) with RAG
+# to build an internal company knowledge assistant. The knowledge base
+# contains engineering standards, HR policies, infrastructure docs,
+# security policies, and architecture decision records.
+#
+# Everything runs locally — no external API calls needed.
+#
+# Prerequisites:
+#   1. Install Ollama: https://ollama.com
+#   2. Pull a model: ollama pull llama3.2
+#   3. Pull an embedding model: ollama pull nomic-embed-text
+#   4. Ollama must be running: ollama serve
+#
+# Usage:
+#   docker-agent run examples/local-rag/local-rag.yaml
+
+providers:
+  ollama:
+    base_url: http://localhost:11434/v1
+
+models:
+  local-llm:
+    provider: ollama
+    model: llama3.2
+  local-embed:
+    provider: ollama
+    model: nomic-embed-text
+
+agents:
+  root:
+    model: local-llm
+    description: Internal knowledge assistant for Acme Corp
+    instruction: |
+      You are Acme Corp's internal knowledge assistant. You help employees
+      find information about company policies, engineering standards,
+      infrastructure, HR guidelines, and architecture decisions.
+
+      Always search the knowledge base before answering. Be precise and
+      reference specific policy numbers (e.g., POL-SEC-001, ENG-STD-002)
+      when applicable.
+
+      If the knowledge base provides sources, include them as a markdown
+      list of links at the end of your response.
+
+      If you don't find relevant information in the knowledge base, say so
+      clearly rather than guessing.
+    welcome_message: |
+      👋 Hi! I'm Acme Corp's knowledge assistant.
+      Ask me about engineering standards, HR policies, infrastructure, security, or architecture decisions.
+    toolsets:
+      - type: rag
+        ref: company_knowledge
+
+rag:
+  company_knowledge:
+    tool:
+      description: >
+        Internal knowledge base containing Acme Corp company policies,
+        engineering standards, cloud infrastructure documentation,
+        HR policies, and architecture decision records.
+    docs:
+      - ./docs
+    strategies:
+      - type: chunked-embeddings
+        embedding_model: local-embed
+        database: ./acme_embeddings.db
+        vector_dimensions: 768
+        chunking:
+          size: 500
+          overlap: 50
+    results:
+      limit: 5

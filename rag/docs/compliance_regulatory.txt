@@ -1,0 +1,69 @@
+# Acme Corp — Compliance & Regulatory Framework
+
+## Regulatory Landscape (COMP-001)
+**Last Updated:** January 2025
+
+Acme Corp operates in the B2B SaaS space serving customers in the US and EU.
+The following regulations apply to our operations:
+
+### GDPR (General Data Protection Regulation)
+- **Applies to**: All EU customer data and EU-based employees
+- **Data Protection Officer**: Sarah Chen (dpo@acmecorp.com)
+- **Lawful bases**: Contract performance (primary), legitimate interest, consent
+- **Data Subject Rights**: Must respond within 30 days
+  - Right of access, rectification, erasure, portability, objection
+  - Automated process in BambooHR for employee requests
+  - Customer requests routed via support → legal → engineering
+- **Breach notification**: 72 hours to supervisory authority, "without undue delay" to affected individuals
+- **Data transfers**: EU → US via EU-US Data Privacy Framework (DPF), SCCs as fallback
+
+### SOC 2 Type II
+- **Audit firm**: Deloitte
+- **Audit period**: January – December (annual)
+- **Trust Service Criteria**: Security, Availability, Confidentiality
+- **Last audit**: Clean report, December 2024
+- **Next audit**: December 2025
+- **Key controls**:
+  - Access reviews quarterly
+  - Change management via PR process (see ENG-STD-001)
+  - Incident response tested semi-annually
+  - Encryption at rest (AES-256) and in transit (TLS 1.3)
+
+### CCPA (California Consumer Privacy Act)
+- **Applies to**: California-resident customer contacts
+- **"Do Not Sell"**: Acme does not sell personal information
+- **Consumer requests**: Same process as GDPR, 45-day response window
+
+### PCI DSS (Payment Card Industry)
+- **Scope**: Limited — we use Stripe as payment processor
+- **SAQ-A**: Self-Assessment Questionnaire A (card data never touches our systems)
+- **Annual attestation**: Completed via Stripe's compliance dashboard
+- **Key requirement**: No storage, processing, or transmission of cardholder data
+
+## Data Retention Policy (COMP-002)
+
+| Data Type | Retention Period | Deletion Method | Legal Basis |
+|-----------|-----------------|-----------------|-------------|
+| Customer account data | Duration of contract + 2 years | Automated purge | Contract |
+| Transaction records | 7 years | Automated purge | Tax/legal obligation |
+| Application logs | 90 days (OpenSearch) + 1 year (S3) | Lifecycle policy | Legitimate interest |
+| Audit logs | 3 years | Manual review + purge | SOC 2 / legal |
+| Employee PII | Duration of employment + 6 years | Manual purge by HR | Legal obligation |
+| Marketing consent | Until withdrawal + 30 days | Automated | Consent |
+| Support tickets | 3 years after resolution | Automated purge | Legitimate interest |
+| Backups | 30 days (database), 90 days (full) | Automatic rotation | Business continuity |
+
+## Audit & Evidence Collection (COMP-003)
+
+### Continuous Compliance
+We maintain audit readiness through:
+- **Automated evidence collection**: Vanta platform pulls evidence from AWS, GitHub, BambooHR
+- **Quarterly access reviews**: All system access reviewed by managers via Vanta
+- **Monthly vulnerability scans**: Snyk (dependencies) + AWS Inspector (infrastructure)
+- **Semi-annual penetration tests**: Conducted by NCC Group
+- **Annual tabletop exercises**: Incident response and disaster recovery simulations
+
+### Audit Contacts
+- **Internal audit lead**: Michael Torres (michael.torres@acmecorp.com)
+- **External auditor**: Deloitte — Partner: James Liu
+- **Compliance questions**: #compliance on Slack or compliance@acmecorp.com

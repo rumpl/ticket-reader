@@ -11,7 +11,7 @@ import (
 	"github.com/docker/docker-agent/pkg/chat"
 	"github.com/docker/docker-agent/pkg/config/latest"
 	"github.com/docker/docker-agent/pkg/environment"
-	"github.com/docker/docker-agent/pkg/model/provider/openai"
+	"github.com/docker/docker-agent/pkg/model/provider"
 	"github.com/docker/docker-agent/pkg/model/provider/options"
 	"github.com/docker/docker-agent/pkg/runtime"
 	"github.com/docker/docker-agent/pkg/session"
@@ -38,7 +38,7 @@ func run(ctx context.Context) error {
 		return err
 	}
 
-	llm, err := openai.NewClient(
+	llm, err := provider.New(
 		ctx,
 		&latest.ModelConfig{
 			Provider: "openai",

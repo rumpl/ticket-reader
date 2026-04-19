@@ -210,7 +210,67 @@ $ docker agent run ./coder.yaml
 
 ---
 
-# Demo - Un agent minimaliste (Pokemon!)
+# Demo - Un agent spécialisé
+
+On peut donc avoir un Agent de Code ultra performant
+et à la fois très flexible.
+
+Peut-on écrire un agent beaucoup plus spécialisé ?
+
++ Pouvant utiliser des modèles moins couteux
++ Et plus rapides
++ Donc avec un choix plus large de modèles
++ Avec le minimum d'outils, afin de limiter l'impact de possibles erreurs
+
+La réponse est oui, nous allons créer un agent de ce type.
+
+---
+
+# Demo - Un agent spécialisé
+
+Il y a des APIs tout autour de nous.
+
+Peut-on écrire un agent qui utilise ces APIs comme des outils ?
+
+Il est facile de transformer un API compatible Open API en une
+boite à outils.
+
+```yaml
+- type: openapi
+  url: https://raw.githubusercontent.com/PokeAPI/pokeapi/master/openapi.yml
+```
+
+Ici, c'est une API Pokemons, ailleurs, c'est une API métier.
+
+---
+
+# Demo - Un agent spécialisé en Pokemons
+
+```yaml
+agents:
+  root:
+    model: anthropic/claude-haiku-4-5
+    instruction: |
+      Tu es un expert en Pokémon.
+      Sois bref dans tes réponses.
+      Sois aussi amusant !
+      IMPORTANT : Utilise toujours les noms français des Pokémon.
+    toolsets:
+      - type: openapi
+        url: https://raw.githubusercontent.com/PokeAPI/pokeapi/master/openapi.yml
+```
+
+Ici, c'est une API Pokemon, ailleurs, c'est une API métier.
+
+```bash
+$ docker agent run ./pokemon.yaml
+```
+
+ou
+
+```bash
+$ docker agent run ./pokemon-plus.yaml
+```
 
 ---
 
@@ -221,5 +281,3 @@ $ docker agent run ./coder.yaml
 # Questions
 
 Q/A
-
-

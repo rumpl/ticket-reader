@@ -1,8 +1,8 @@
 models:
   opus:
     provider: anthropic
-    model: claude-opus-4-6
-    thinking_budget: adaptive/low
+    model: claude-opus-4-7
+    thinking_budget: adaptive/xhigh
 
   sonnet:
     provider: anthropic

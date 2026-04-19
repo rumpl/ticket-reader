@@ -274,6 +274,26 @@ $ docker agent run ./pokemon-plus.yaml
 
 ---
 
+# Demo - How do you optimize this agent?
+
+```bash
+$ docker agent eval ./pokemon-plus.yaml
+```
+
+And manually make the changes...
+
+---
+
+# Demo - How do you optimize this agent?
+
+Way better: User another agent to optimize it:
+
+```bash
+$ docker agent run ./eval-expert.yaml "Optimize pokemon-plus.yaml"
+```
+
+---
+
 # Demo - Go SDK
 
 ---

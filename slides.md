@@ -10,8 +10,7 @@ L’IA révolutionne nos métiers autour du développement.
 Chez Docker, nous jouons les éclaireurs et changeons totalement
 notre façon de travailler. 
 
-Pour ce faire, nous avons créé `Docker Agent`, un framework agentique pour
-créer vos propres agents.
+Pour nous accompagner, nous avons créé `Docker Agent`, un framework agentique pour créer des agents.
 
 Des agents de code, mais pas seulement.
 
@@ -21,9 +20,9 @@ Des agents de code, mais pas seulement.
 
 # Qui sommes-nous?
 
-**Djordje Lukić** - Principal Engineer à Docker
+**Djordje Lukić** - Principal Engineer à **Docker**
 
-**David Gageot** - Senior Principal Engineer à Docker
+**David Gageot** - Senior Principal Engineer à **Docker**
 
 ## Produits IA depuis 1 an et demi:
 
@@ -54,10 +53,10 @@ L'impression d'une éternité !
 Un monde nouveau:
 
 + `Claude Code`
-+ `Opus 4.6`, `GPT 5.4`
++ `Opus` ~~4.6~~`4.7`, `GPT 5.4`
 + `MCP` est déjà presque out
 + Des **orchestrateurs** d'agents
-+ Des codebase 100% codées par des agents
++ Des codebase `100%` codées par des agents
 
 ---
 
@@ -78,7 +77,7 @@ Un monde nouveau:
 
 + Qui utilise l'IA pour coder?
 + Qui ne code plus?
-+ Qui créé des agents pour autre chose que le code?
++ Qui créé des agents pour autre chose coder?
 
 ---
 
@@ -86,7 +85,7 @@ Un monde nouveau:
 
 ## Un vrai Couteau Suisse
 + Open-Source
-+ Ouvert: OpenAI, Anthropic, Google, Mistral, DMR, ...
++ Ouvert: `OpenAI`, `Anthropic`, `Gemini`, `Mistral`, `Docker Model Runner`, `Ollama` ...
 
 ## Riche
 + `Docker Agent` est codé principalement avec `Docker Agent`
@@ -99,18 +98,34 @@ Un monde nouveau:
 
 ---
 
-# Demo - Pirate
+# Première Demo
 
 `Docker Agent` sert à définir tout type d'agent.
 
-+ Sans une ligne de code (mais du `YAML`)
-+ Du plus utile au moins utile.
+**Du plus utile au moins utile.**
 
 ## Exemple totalement inutile:
 
 ```bash
 $ docker agent run "pirate"
 ```
+
+---
+
+# Demo: Pirate
+
+## Du YAML et rien d'autre
+
+```yaml
+agents:
+  root:
+    model: auto
+    instruction: Always answer by talking like a pirate.
+    welcome_message: |
+      Ahoy! I be yer pirate guide, ready to set sail on the seas o' knowledge!
+      What be yer quest? 🏴‍☠️
+```
+
 ---
 
 # Demo - Coding Agent
@@ -135,7 +150,7 @@ $ docker agent run "pirate"
 $ docker agent run "coder"
 ```
 
-**Mais vous devriez créer le votre.**
+**Mais le mieux est de créer le sien.**
 
 ---
 
@@ -239,7 +254,7 @@ agents:
 
 # Demo - Version finale
 
-Nous avons notre propre version d'un *Coding Agent*.
+Nous avons notre propre version d'un *Agent de Code*.
 
 ## Lancement de l'agent
 
@@ -251,7 +266,7 @@ $ docker agent run "./coder.yaml"
 
 # Demo - Partage
 
-Cet agent est **facile à partager**
+Cet agent est **facile à partager !** 
 
 ## Publier
 
@@ -269,10 +284,10 @@ $ docker agent run "davidgageot135/coder:devoxx"
 
 # Demo - Un agent spécialisé
 
-On peut donc avoir un Agent de Code ultra performant
+On peut donc avoir un `Agent de Code` ultra-performant
 et à la fois très flexible.
 
-*Peut-on écrire un agent beaucoup plus spécialisé ?*
+*Peut-on écrire des  agents plus spécialisés ?*
 
 + Pouvant utiliser des modèles *moins couteux*
 + Et *plus rapides*
@@ -285,7 +300,7 @@ et à la fois très flexible.
 
 # Demo - Un agent spécialisé
 
-Il y a des APIs tout autour de nous.
+Il y a des `APIs` tout autour de nous.
 
 *Peut-on écrire un agent qui utilise ces APIs comme des outils ?*
 
@@ -294,7 +309,7 @@ boite à outils.
 
 ```yaml
 - type: openapi
-  url: https://raw.githubusercontent.com/PokeAPI/pokeapi/master/openapi.yml
+  url: "https://raw.githubusercontent.com/PokeAPI/pokeapi/master/openapi.yml"
 ```
 
 **Ici, c'est une API Pokemons, ailleurs, c'est une API métier.**
@@ -316,7 +331,7 @@ agents:
       IMPORTANT : Utilise toujours les noms français des Pokémon.
     toolsets:
       - type: openapi
-        url: https://raw.githubusercontent.com/PokeAPI/pokeapi/master/openapi.yml
+        url: "https://raw.githubusercontent.com/PokeAPI/pokeapi/master/openapi.yml"
 ```
 
 ## Lancement de l'agent
@@ -325,7 +340,33 @@ agents:
 $ docker agent run "./pokemon.yaml"
 ```
 
-ou
+---
+
+# Demo - Un agent spécialisé en Pokemons
+
+## Le YAML
+
+```yaml
+agents:
+  root:
+    model: anthropic/claude-haiku-4-5
+    instruction: |
+      Tu es un expert en Pokémon.
+      Sois bref dans tes réponses.
+      Sois aussi amusant !
+      IMPORTANT : Utilise toujours les noms français des Pokémon.
+    toolsets:
+      - type: openapi
+        url: "https://raw.githubusercontent.com/PokeAPI/pokeapi/master/openapi.yml"
+```
+
+## Lancement de l'agent
+
+```bash
+$ docker agent run "./pokemon.yaml"
+```
+
+ou une version encore plus riche:
 
 ```bash
 $ docker agent run "./pokemon-plus.yaml"

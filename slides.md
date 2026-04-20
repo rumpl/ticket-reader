@@ -402,7 +402,59 @@ $ docker agent run "./eval-expert.yaml" "Optimize pokemon-plus.yaml"
 
 ---
 
-# Demo - Go SDK
+# Go SDK
+
+On peut aller encore plus loin en combinant du `Yaml`, du `code` et le `SDK` de `Docker Agent`.
+
+## Un exemple
+
+Un outil capable de lire des tickets de caisse et d'en extraire des montant.
+
+```
+~~~mermaid-ascii
+graph LR
+Image --> Go --> SDK Docker Agent --> Agent Yaml --> JSON
+~~~
+```
+
+---
+
+# Demo - Lecture de Tickets
+
+## Yaml
+
+```yaml
+agents:
+  root:
+    model: openai/gpt-5.4
+    instruction: Your job is to read a receipt and extract the total price from it. You will be given the receipt as text. You should only return the total price in a structured format.
+    structured_output:
+      name: "ticket"
+      description: "Informations extraites du ticket de caisse"
+      strict: true
+      schema:
+        type: object
+        properties:
+          store:
+            type: string
+            description: "The store name"
+          price:
+            type: number
+            description: "The total price of the purchase"
+        required:
+          - store
+          - price
+
+        additionalProperties: false
+    toolsets:
+      - type: filesystem
+```
+
+## Lancement
+
+```bash
+go run ./...
+```
 
 ---
 

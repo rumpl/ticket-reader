@@ -107,7 +107,7 @@ Un monde nouveau:
 ## Exemple totalement inutile:
 
 ```bash
-$ docker agent run "pirate"
+$ docker agent run "pirate.yaml"
 ```
 
 ---

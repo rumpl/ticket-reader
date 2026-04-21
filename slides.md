@@ -107,7 +107,7 @@ Un monde nouveau:
 ## Exemple totalement inutile:
 
 ```bash
-$ docker agent run "pirate"
+$ docker agent run "pirate.yaml"
 ```
 
 ---
@@ -128,9 +128,9 @@ agents:
 
 ---
 
-# Demo - Coding Agent
+# Demo - Agents de Code
 
-`Docker Agent` est un excellent Coding Agent.
+`Docker Agent` est un excellent Agent de Code. Extrêmement flexible.
 
 `Docker Agent` est codé principalement avec `Docker Agent`
 
@@ -154,15 +154,13 @@ $ docker agent run "coder"
 
 ---
 
-# Demo - Créer son Coding Agent
+# Demo - Créer son Agent de Code
 
 Définir un agent principal en `YAML`.
 
 + Ici, avec un modèle `Anthropic`
 + Peut être (`OpenAI`, `Gemini`, `Docker Model Runner`, `Ollama`, `Mistral`, `OpenAI compatible`...)
 + Tous les tools nécessaires à manipuler du code
-
-## Le YAML
 
 ```yaml
 agents:
@@ -184,12 +182,10 @@ agents:
 
 ---
 
-# Demo - Ajouter un agent "Planificateur"
+# Demo - Ajouter un "Planificateur"
 
 Ajouter un sous-agent capable de préparer le travail en posant des questions
 à l'utilisateur.
-
-## Le YAML
 
 ```yaml
 agents:
@@ -218,11 +214,9 @@ agents:
 
 ---
 
-# Demo - Ajouter un agent de "Bibliothecaire"
+# Demo - Ajouter un "Bibliothécaire"
 
 Pour faire des recherches Web ou obtenir des informations sur les APIs.
-
-## Le YAML
 
 ```yaml
 models:
@@ -255,7 +249,7 @@ agents:
 
 Nous avons notre propre version d'un *Agent de Code*.
 
-## Lancement de l'agent
+## Une simple commande
 
 ```console
 $ docker agent run "./coder.yaml"
@@ -288,10 +282,10 @@ et à la fois très flexible.
 
 **Peut-on écrire des agents plus spécialisés ?**
 
-+ Pouvant utiliser des modèles *moins couteux*
-+ Et *plus rapides*
-+ Donc avec un *choix plus large* de modèles
-+ Avec le minimum d'outils, afin de limiter l'impact de possibles erreurs
++ Pouvant utiliser des modèles `moins couteux`
++ Et `plus rapides`
++ Donc avec un `choix plus large` de modèles
++ Avec le `minimum d'outils`, afin de limiter l'impact de possibles erreurs
 
 **La réponse est oui, nous allons créer un agent de ce type.**
 
@@ -303,8 +297,7 @@ Il y a des `APIs` tout autour de nous.
 
 *Peut-on écrire un agent qui utilise ces APIs comme des outils ?*
 
-Il est facile de transformer un API compatible Open API en une
-boite à outils.
+## Transformer un Open API en boite à outils
 
 ```yaml
 - type: openapi
@@ -317,7 +310,6 @@ boite à outils.
 
 # Demo - Un agent spécialisé en Pokemons
 
-## Le YAML
 
 ```yaml
 agents:
@@ -343,7 +335,6 @@ $ docker agent run "./pokemon.yaml"
 
 # Demo - Un agent spécialisé en Pokemons
 
-## Le YAML
 
 ```yaml
 agents:
@@ -373,27 +364,75 @@ $ docker agent run "./pokemon-plus.yaml"
 
 ---
 
-# Demo - Comment optimiser cet agent?
+# Et après?
 
-On écrit des `evals` et on vérifie si notre agent obtient un bon score.
+Comment décider si cet agent est optimisé pour une liste de tâches ?
 
-## Lancement des evals
+## Evals
 
-```bash
-$ docker agent eval "./pokemon-plus.yaml"
+On écrit des `evals` = des cas de test:
+
+```yaml
+{
+  "title": "Pokémon aléatoire: informations complètes",
+  "evals": {
+    "relevance": [
+      "Includes the url to this pokemon in the pokedex"
+    ]
+  },
+  "messages": [
+    {
+      "message": {
+        "message": {
+          "role": "user",
+          "content": "Choisis un Pokémon au hasard et dis-moi tout sur lui",
+        }
+...
 ```
-
-## Et ensuite?
-
-On modifie le `YAML` à la main et on boucle !
 
 ---
 
 # Demo - Comment optimiser cet agent?
 
-Bien mieux: Utiliser un autre agent pour optimiser notre agent.
+## Lancement des evals
+
+```script
+$ docker agent eval "./pokemon-plus.yaml"
+
+Validating judge model...
+Pre-building 1 Docker image(s)...
+Running 2 evaluations with concurrency 16
+
+✗ Pokémon aléatoire: informations complètes ($0.049806)
+  ✓ tool calls
+  ✗ relevance
+✗ Pokémon de départ de Kanto - Classement stats ($0.135214)
+  ✗ tool calls score 0.67
+  ✗ relevance
+
+✅     Tool Calls: 83.3% avg F1 (2 evals)
+❌      Relevance: 1/3 passed (33.3%)
+
+Total Cost: $0.185020
+Total Time: 30s
+Sessions DB: evals/results/warm-dawn-182.db
+```
+
+---
+
+# Et ensuite?
+
+On modifie le `YAML` à la main et on boucle !
+
+---
+
+# Et ensuite?
+
+On modifie le `YAML` à la main et on boucle !
 
 ## Optimisation automatique
+
+Bien mieux: On utilise un autre agent pour optimiser notre agent.
 
 ```bash
 $ docker agent run "./eval-expert.yaml" "Optimize pokemon-plus.yaml"
@@ -420,12 +459,55 @@ Image --> Go --> SDK Docker Agent --> Agent Yaml --> JSON
 
 # Demo - Lecture de Tickets
 
-## Yaml
+```yaml
+agents:
+  root:
+    model: openai/gpt-5.4
+    instruction: |
+      Your job is to read a receipt and extract the total price from it.
+      You will be given the receipt as text.
+      You should only return the total price in a structured format.
+    ...
+```
+
+---
+
+# Demo - Lecture de Tickets
 
 ```yaml
-~~~cat ./ticket-reader/agent.yaml
+agents:
+  root:
+    ...
+    structured_output:
+      name: "ticket"
+      description: "Informations extraites du ticket de caisse"
+      strict: true
+      schema:
+        type: object
+        properties:
+          store:
+            type: string
+            description: "The store name"
+          price:
+            type: number
+            description: "The total price of the purchase"
+        required:
+          - store
+          - price
+        additionalProperties: false
+      ...
+```
 
-~~~
+---
+
+# Demo - Lecture de Tickets
+
+```yaml
+agents:
+  root:
+    ...
+    toolsets:
+      - type: filesystem
 ```
 
 ## Lancement

@@ -4,107 +4,107 @@ paging: Slide %d / %d
 theme: ./theme.json
 ---
 
-# Docker Agent, le Couteau Suisse Agentique de Docker.
+# Docker Agent, Docker's Agentic Swiss Army Knife.
 
-L’IA révolutionne nos métiers autour du développement.
+AI is revolutionizing our development-related jobs.
 
-Chez Docker, nous jouons les éclaireurs et changeons totalement
-notre façon de travailler. 
+At Docker, we're playing the role of scouts and completely changing
+the way we work.
 
-Pour nous accompagner, nous avons créé `Docker Agent`, un framework agentique pour créer des agents.
+To help us, we've created `Docker Agent`, an agentic framework for building agents.
 
-Des agents de code, mais pas seulement.
+Code agents, but not only.
 
-`Open-Source, Model-Agnostic, souvent sans une ligne de code.`
+`Open-Source, Model-Agnostic, often without a single line of code.`
 
 ---
 
-# Qui sommes-nous?
+# Who are we?
 
-**Djordje Lukić** - Principal Engineer à **Docker**
+**Djordje Lukić** - Principal Engineer at **Docker**
 
-**David Gageot** - Senior Principal Engineer à **Docker**
+**David Gageot** - Senior Principal Engineer at **Docker**
 
-## Produits IA depuis 1 an et demi:
+## AI products for the past year and a half:
 
 + `Gordon`
 + `MCP Gateway`
 + `MCP Toolkit`
 + `Docker Agent`
-+ Et plus 🐳
++ And more 🐳
 
 ---
 
-# L'IA depuis un an et demi
+# AI for the past year and a half
 
-L'impression d'une éternité !
+It feels like an eternity!
 
-+ Débuts sur Gordon avec `llama3` puis `gpt-4o`
-+ Pas de `MCP`
-+ Pas de `Opus`
-+ Débuts de `Copilot`
-+ Des chat bots mais pas d'agents
-+ Coder avec l'IA est possible mais une route semée d'embûches
-+ Prémices du *vibe-coding*
++ Started with Gordon using `llama3` then `gpt-4o`
++ No `MCP`
++ No `Opus`
++ Early days of `Copilot`
++ Chat bots but no agents
++ Coding with AI was possible but a bumpy road
++ The beginnings of *vibe-coding*
 
 ---
 
-# Et maintenant?
+# And now?
 
-Un monde nouveau:
+A brand new world:
 
 + `Opus` ~~4.6~~`4.7`, `GPT 5.4`
-+ `MCP` est déjà presque out
-+ Des **orchestrateurs** d'agents
-+ Des codebase `100%` codées par des agents
++ `MCP` is already almost out
++ Agent **orchestrators**
++ Codebases `100%` coded by agents
 
 ---
 
-# Et vous?
+# What about you?
 
-+ Qui utilise l'IA pour coder?
-
----
-
-# Et vous?
-
-+ Qui utilise l'IA pour coder?
-+ Qui ne code plus?
++ Who uses AI to code?
 
 ---
 
-# Et vous?
+# What about you?
 
-+ Qui utilise l'IA pour coder?
-+ Qui ne code plus?
-+ Qui créé des agents pour autre chose que coder?
++ Who uses AI to code?
++ Who doesn't code anymore?
+
+---
+
+# What about you?
+
++ Who uses AI to code?
++ Who doesn't code anymore?
++ Who builds agents for something other than coding?
 
 ---
 
 # Docker Agent
 
-## Un vrai Couteau Suisse
+## A true Swiss Army Knife
 + Open-Source
-+ Ouvert: `OpenAI`, `Anthropic`, `Gemini`, `Mistral`, `Docker Model Runner`, `Ollama` ...
++ Open: `OpenAI`, `Anthropic`, `Gemini`, `Mistral`, `Docker Model Runner`, `Ollama` ...
 
-## Riche
-+ `Docker Agent` est codé principalement avec `Docker Agent`
-+ Beaucoup, beaucoup de fonctionnalités !
+## Rich
++ `Docker Agent` is mainly coded with `Docker Agent`
++ Lots and lots of features!
 
-## Utilisable de plusieurs manières
+## Usable in multiple ways
 + `YAML`
-+ `SDK` Go
-+ Utilisé par `Docker` en production pour `Gordon`
++ Go `SDK`
++ Used by `Docker` in production for `Gordon`
 
 ---
 
-# Première Demo
+# First Demo
 
-`Docker Agent` sert à définir tout type d'agent.
+`Docker Agent` can be used to define any kind of agent.
 
-**Du plus utile au moins utile.**
+**From the most useful to the least useful.**
 
-## Exemple totalement inutile:
+## A totally useless example:
 
 ```bash
 $ docker agent run "pirate.yaml"
@@ -114,7 +114,7 @@ $ docker agent run "pirate.yaml"
 
 # Demo: Pirate
 
-## Du YAML et rien d'autre
+## Just YAML and nothing else
 
 ```yaml
 agents:
@@ -128,54 +128,53 @@ agents:
 
 ---
 
-# Demo - Un agent spécialisé
+# Demo - A specialized agent
 
-**Peut-on écrire des agents très spécialisés ?**
+**Can we write highly specialized agents?**
 
-+ Pouvant utiliser des modèles *moins couteux*
-+ Et *plus rapides*
-+ Donc avec un *choix plus large* de modèles
-+ Avec le minimum d'outils, afin de limiter l'impact de possibles erreurs
++ Able to use *cheaper* models
++ And *faster* ones
++ Thus with a *wider choice* of models
++ With the minimum set of tools, to limit the impact of potential errors
 
 ---
 
-# Demo - Un agent spécialisé
+# Demo - A specialized agent
 
-Il y a des `APIs` tout autour de nous.
+There are `APIs` all around us.
 
-*Peut-on écrire un agent qui utilise ces APIs comme des outils ?*
+*Can we write an agent that uses these APIs as tools?*
 
-Il est facile de transformer un API compatible Open API en une
-boite à outils.
+It's easy to turn an Open API-compatible API into a toolbox.
 
 ```yaml
 - type: openapi
   url: "https://raw.githubusercontent.com/PokeAPI/pokeapi/master/openapi.yml"
 ```
 
-**Ici, c'est une API Pokemons, ailleurs, c'est une API métier.**
+**Here it's a Pokemon API, elsewhere it could be a business API.**
 
 ---
 
-# Demo - Un agent spécialisé en Pokemons
+# Demo - A Pokemon-specialized agent
 
-## Le YAML
+## The YAML
 
 ```yaml
 agents:
   root:
     model: anthropic/claude-haiku-4-5
     instruction: |
-      Tu es un expert en Pokémon.
-      Sois bref dans tes réponses.
-      Sois aussi amusant !
-      IMPORTANT : Utilise toujours les noms français des Pokémon.
+      You are a Pokémon expert.
+      Be brief in your answers.
+      Be fun too!
+      IMPORTANT: Always use the French names of Pokémon.
     toolsets:
       - type: openapi
         url: "https://raw.githubusercontent.com/PokeAPI/pokeapi/master/openapi.yml"
 ```
 
-## Lancement de l'agent
+## Running the agent
 
 ```bash
 $ docker agent run "./pokemon.yaml"
@@ -183,31 +182,31 @@ $ docker agent run "./pokemon.yaml"
 
 ---
 
-# Demo - Un agent spécialisé en Pokemons
+# Demo - A Pokemon-specialized agent
 
-## Le YAML
+## The YAML
 
 ```yaml
 agents:
   root:
     model: anthropic/claude-haiku-4-5
     instruction: |
-      Tu es un expert en Pokémon.
-      Sois bref dans tes réponses.
-      Sois aussi amusant !
-      IMPORTANT : Utilise toujours les noms français des Pokémon.
+      You are a Pokémon expert.
+      Be brief in your answers.
+      Be fun too!
+      IMPORTANT: Always use the French names of Pokémon.
     toolsets:
       - type: openapi
         url: "https://raw.githubusercontent.com/PokeAPI/pokeapi/master/openapi.yml"
 ```
 
-## Lancement de l'agent
+## Running the agent
 
 ```bash
 $ docker agent run "./pokemon.yaml"
 ```
 
-## Ou une version plus avancée:
+## Or a more advanced version:
 
 ```bash
 $ docker agent run "./pokemon-plus.yaml"
@@ -215,27 +214,27 @@ $ docker agent run "./pokemon-plus.yaml"
 
 ---
 
-# Demo - Comment optimiser cet agent?
+# Demo - How do we optimize this agent?
 
-On écrit des `evals` et on vérifie si notre agent obtient un bon score.
+We write `evals` and check whether our agent gets a good score.
 
-## Lancement des evals
+## Running the evals
 
 ```bash
 $ docker agent eval "./pokemon-plus.yaml"
 ```
 
-## Et ensuite?
+## And then?
 
-On modifie le `YAML` à la main et on boucle !
+We tweak the `YAML` by hand and loop!
 
 ---
 
-# Demo - Comment optimiser cet agent?
+# Demo - How do we optimize this agent?
 
-Bien mieux: Utiliser un autre agent pour optimiser notre agent.
+Much better: use another agent to optimize our agent.
 
-## Optimisation automatique
+## Automatic optimization
 
 ```bash
 $ docker agent run "./eval-expert.yaml" "Optimize pokemon-plus.yaml"
@@ -243,9 +242,9 @@ $ docker agent run "./eval-expert.yaml" "Optimize pokemon-plus.yaml"
 
 ---
 
-# On ne vous a pas montré
+# What we didn't show you
 
-+ Agents de Code
++ Code Agents
 + Go SDK
 + Structured Output
 + A2A
@@ -258,7 +257,7 @@ $ docker agent run "./eval-expert.yaml" "Optimize pokemon-plus.yaml"
 + Slash commands
 + Hooks
 + Sandbox
-+ Mode Routing
++ Routing Mode
 + More tools (Http, TODO, Memory, Scripts, LSP, Background Agents...)
 + ...
 
@@ -266,4 +265,4 @@ $ docker agent run "./eval-expert.yaml" "Optimize pokemon-plus.yaml"
 
 # Questions
 
-Merci à tous !
+Thanks everyone!

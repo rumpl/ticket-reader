@@ -16,6 +16,7 @@ import (
 	"github.com/docker/docker-agent/pkg/runtime"
 	"github.com/docker/docker-agent/pkg/session"
 	"github.com/docker/docker-agent/pkg/team"
+	"github.com/docker/docker-agent/pkg/tools"
 	"github.com/google/jsonschema-go/jsonschema"
 )
 
@@ -33,11 +34,15 @@ func main() {
 }
 
 func run(ctx context.Context) error {
-	schema, err := jsonschema.For[Ticket](&jsonschema.ForOptions{})
+	jsonSchema, err := jsonschema.For[Ticket](&jsonschema.ForOptions{})
 	if err != nil {
 		return err
 	}
 
+	schema, err := tools.SchemaToMap(jsonSchema)
+	if err != nil {
+		return err
+	}
 	llm, err := provider.New(
 		ctx,
 		&latest.ModelConfig{
@@ -47,7 +52,7 @@ func run(ctx context.Context) error {
 		environment.NewDefaultProvider(),
 		options.WithStructuredOutput(&latest.StructuredOutput{
 			Name:   "ticket",
-			Schema: SchemaToMap(schema),
+			Schema: schema,
 		}),
 	)
 	if err != nil {

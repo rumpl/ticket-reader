@@ -287,7 +287,7 @@ $ docker agent run "davidgageot135/coder:devoxx"
 On peut donc avoir un `Agent de Code` ultra-performant
 et à la fois très flexible.
 
-*Peut-on écrire des  agents plus spécialisés ?*
+*Peut-on écrire des agents plus spécialisés ?*
 
 + Pouvant utiliser des modèles *moins couteux*
 + Et *plus rapides*
@@ -366,7 +366,7 @@ agents:
 $ docker agent run "./pokemon.yaml"
 ```
 
-ou une version encore plus riche:
+## Ou une version plus avancée:
 
 ```bash
 $ docker agent run "./pokemon-plus.yaml"
@@ -424,30 +424,9 @@ Image --> Go --> SDK Docker Agent --> Agent Yaml --> JSON
 ## Yaml
 
 ```yaml
-agents:
-  root:
-    model: openai/gpt-5.4
-    instruction: Your job is to read a receipt and extract the total price from it. You will be given the receipt as text. You should only return the total price in a structured format.
-    structured_output:
-      name: "ticket"
-      description: "Informations extraites du ticket de caisse"
-      strict: true
-      schema:
-        type: object
-        properties:
-          store:
-            type: string
-            description: "The store name"
-          price:
-            type: number
-            description: "The total price of the purchase"
-        required:
-          - store
-          - price
+~~~cat ./ticket-reader/agent.yaml
 
-        additionalProperties: false
-    toolsets:
-      - type: filesystem
+~~~
 ```
 
 ## Lancement

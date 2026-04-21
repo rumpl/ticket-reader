@@ -1,7 +1,10 @@
 agents:
   root:
     model: openai/gpt-5.4
-    instruction: Your job is to read a receipt and extract the total price from it. You will be given the receipt as text. You should only return the total price in a structured format.
+    instruction: |
+      Your job is to read a receipt and extract the total price from it.
+      You will be given the receipt as text.
+      You should only return the total price in a structured format.
     structured_output:
       name: "ticket"
       description: "Informations extraites du ticket de caisse"

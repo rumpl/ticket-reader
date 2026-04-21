@@ -246,6 +246,8 @@ $ docker agent run "./eval-expert.yaml" "Optimize pokemon-plus.yaml"
 # On ne vous a pas montré
 
 + Agents de Code
++ Go SDK
++ Structured Output
 + A2A
 + ACP
 + MCP (local, remote, oauth)

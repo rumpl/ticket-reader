@@ -7,6 +7,7 @@ theme: ./theme.json
 # Docker Agent, le Couteau Suisse Agentique de Docker.
 
 L’IA révolutionne nos métiers autour du développement.
+
 Chez Docker, nous jouons les éclaireurs et changeons totalement
 notre façon de travailler. 
 
@@ -40,7 +41,7 @@ L'impression d'une éternité !
 
 + Débuts sur Gordon avec `llama3` puis `gpt-4o`
 + Pas de `MCP`
-+ Pas de `Claude Code`
++ Pas de `Opus`
 + Débuts de `Copilot`
 + Des chat bots mais pas d'agents
 + Coder avec l'IA est possible mais une route semée d'embûches
@@ -52,7 +53,6 @@ L'impression d'une éternité !
 
 Un monde nouveau:
 
-+ `Claude Code`
 + `Opus` ~~4.6~~`4.7`, `GPT 5.4`
 + `MCP` est déjà presque out
 + Des **orchestrateurs** d'agents
@@ -77,7 +77,7 @@ Un monde nouveau:
 
 + Qui utilise l'IA pour coder?
 + Qui ne code plus?
-+ Qui créé des agents pour autre chose coder?
++ Qui créé des agents pour autre chose que coder?
 
 ---
 
@@ -119,7 +119,7 @@ $ docker agent run "pirate"
 ```yaml
 agents:
   root:
-    model: auto
+    model: anthropic/claude-sonnet-4-5
     instruction: Always answer by talking like a pirate.
     welcome_message: |
       Ahoy! I be yer pirate guide, ready to set sail on the seas o' knowledge!
@@ -150,7 +150,7 @@ agents:
 $ docker agent run "coder"
 ```
 
-**Mais le mieux est de créer le sien.**
+**Mais le mieux est de créer son propre agent.**
 
 ---
 
@@ -177,7 +177,6 @@ agents:
     toolsets:
       - type: filesystem
       - type: shell
-      - type: todo
       - type: mcp
         command: gopls
         args: ["mcp"]
@@ -287,7 +286,7 @@ $ docker agent run "davidgageot135/coder:devoxx"
 On peut donc avoir un `Agent de Code` ultra-performant
 et à la fois très flexible.
 
-*Peut-on écrire des agents plus spécialisés ?*
+**Peut-on écrire des agents plus spécialisés ?**
 
 + Pouvant utiliser des modèles *moins couteux*
 + Et *plus rapides*
@@ -408,7 +407,7 @@ On peut aller encore plus loin en combinant du `Yaml`, du `code` et le `SDK` de 
 
 ## Un exemple
 
-Un outil capable de lire des tickets de caisse et d'en extraire des montant.
+Un outil capable de lire des tickets de caisse et d'en extraire des montants.
 
 ```
 ~~~mermaid-ascii
@@ -434,6 +433,24 @@ Image --> Go --> SDK Docker Agent --> Agent Yaml --> JSON
 ```bash
 go run ./...
 ```
+
+---
+
+# On ne vous a pas montré
+
++ A2A
++ ACP
++ MCP (local, remote, oauth)
++ Handoff
++ Alloy
++ RAG
++ Code Mode
++ Slash commands
++ Hooks
++ Sandbox
++ Mode Routing
++ More tools (Http, TODO, Memory, Scripts, LSP, Background Agents...)
++ ...
 
 ---
 

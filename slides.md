@@ -19,7 +19,7 @@ Des agents de code, mais pas seulement.
 
 ---
 
-# Qui sommes-nous?
+# Qui sommes-nous ?
 
 **Djordje Lukić** - Principal Engineer à **Docker**
 
@@ -49,7 +49,7 @@ L'impression d'une éternité !
 
 ---
 
-# Et maintenant?
+# Et maintenant ?
 
 Un monde nouveau:
 
@@ -60,24 +60,33 @@ Un monde nouveau:
 
 ---
 
-# Et vous?
+# Et vous ?
 
-+ Qui utilise l'IA pour coder?
-
----
-
-# Et vous?
-
-+ Qui utilise l'IA pour coder?
-+ Qui ne code plus?
++ Qui utilise l'IA pour coder ?
 
 ---
 
-# Et vous?
+# Et vous ?
 
-+ Qui utilise l'IA pour coder?
-+ Qui ne code plus?
-+ Qui créé des agents pour autre chose que coder?
++ Qui utilise l'IA pour coder ?
++ Quel outil ?
+
+---
+
+# Et vous ?
+
++ Qui utilise l'IA pour coder ?
++ Quel outil ?
++ Qui ne code plus ?
+
+---
+
+# Et vous ?
+
++ Qui utilise l'IA pour coder ?
++ Quel outil ?
++ Qui ne code plus ?
++ Qui créé des agents pour autre chose que coder ?
 
 ---
 
@@ -364,7 +373,7 @@ $ docker agent run "./pokemon-plus.yaml"
 
 ---
 
-# Et après?
+# Et après ?
 
 Comment décider si cet agent est optimisé pour une liste de tâches ?
 
@@ -392,7 +401,7 @@ On écrit des `evals` = des cas de test:
 
 ---
 
-# Démo - Comment optimiser cet agent?
+# Démo - Comment optimiser cet agent ?
 
 ## Lancement des evals
 
@@ -420,13 +429,13 @@ Sessions DB: evals/results/warm-dawn-182.db
 
 ---
 
-# Et ensuite?
+# Et ensuite ?
 
 On modifie le `YAML` à la main et on boucle !
 
 ---
 
-# Et ensuite?
+# Et ensuite ?
 
 On modifie le `YAML` à la main et on boucle !
 
@@ -440,7 +449,7 @@ $ docker agent run "./eval-expert.yaml" "Optimize pokemon-plus.yaml"
 
 ---
 
-# Et ensuite?
+# Et ensuite ?
 
 On modifie le `YAML` à la main et on boucle !
 

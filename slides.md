@@ -4,7 +4,7 @@ paging: Slide %d / %d
 theme: ./theme.json
 ---
 
-# Docker Agent, le Couteau Suisse Agentique de Docker.
+# Docker Agent, le Couteau Suisse Agentique de Docker
 
 L’IA révolutionne nos métiers autour du développement.
 
@@ -107,7 +107,7 @@ Un monde nouveau:
 
 ---
 
-# Première Demo
+# Démo
 
 `Docker Agent` sert à définir tout type d'agent.
 
@@ -121,7 +121,7 @@ $ docker agent run "pirate.yaml"
 
 ---
 
-# Démo - Pirate
+# Démo
 
 ## Du YAML et rien d'autre
 
@@ -260,7 +260,7 @@ Nous avons notre propre version d'un *Agent de Code*.
 
 ## Une simple commande
 
-```console
+```bash
 $ docker agent run "./coder.yaml"
 ```
 
@@ -272,13 +272,13 @@ Cet agent est **facile à partager !**
 
 ## Publier
 
-```console
+```bash
 $ docker agent share push "./coder.yaml" "davidgageot135/coder:devoxx"
 ```
 
 ## Utiliser
 
-```console
+```bash
 $ docker agent run "davidgageot135/coder:devoxx"
 ```
 
@@ -286,12 +286,11 @@ $ docker agent run "davidgageot135/coder:devoxx"
 
 # Démo - Un agent spécialisé
 
-On peut donc avoir un `Agent de Code` ultra-performant
-et à la fois très flexible.
+On peut donc avoir un `Agent de Code` ultra-performant et sur mesure.
 
 **Peut-on écrire des agents plus spécialisés ?**
 
-+ Pouvant utiliser des modèles `moins couteux`
++ Pouvant utiliser des modèles `moins coûteux`
 + Et `plus rapides`
 + Donc avec un `choix plus large` de modèles
 + Avec le `minimum d'outils`, afin de limiter l'impact de possibles erreurs
@@ -313,11 +312,11 @@ Il y a des `APIs` tout autour de nous.
   url: "https://raw.githubusercontent.com/PokeAPI/pokeapi/master/openapi.yml"
 ```
 
-**Ici, c'est une API Pokemons, ailleurs, c'est une API métier.**
+**Ici, c'est une API Pokémon, ailleurs, c'est une API métier.**
 
 ---
 
-# Démo - Un agent spécialisé en Pokemons
+# Démo - Un agent spécialisé en Pokémon
 
 
 ```yaml
@@ -342,7 +341,7 @@ $ docker agent run "./pokemon.yaml"
 
 ---
 
-# Démo - Un agent spécialisé en Pokemons
+# Démo - Un agent spécialisé en Pokémon
 
 
 ```yaml

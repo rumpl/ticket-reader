@@ -69,14 +69,14 @@ Un monde nouveau:
 # Et vous ?
 
 + Qui utilise l'IA pour coder ?
-+ Quel outil ?
++ Quels outils ?
 
 ---
 
 # Et vous ?
 
 + Qui utilise l'IA pour coder ?
-+ Quel outil ?
++ Quels outils ?
 + Qui ne code plus ?
 
 ---
@@ -84,7 +84,7 @@ Un monde nouveau:
 # Et vous ?
 
 + Qui utilise l'IA pour coder ?
-+ Quel outil ?
++ Quels outils ?
 + Qui ne code plus ?
 + Qui créé des agents pour autre chose que coder ?
 

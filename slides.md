@@ -112,7 +112,7 @@ $ docker agent run "pirate.yaml"
 
 ---
 
-# Demo: Pirate
+# Démo - Pirate
 
 ## Du YAML et rien d'autre
 
@@ -128,7 +128,7 @@ agents:
 
 ---
 
-# Demo - Agents de Code
+# Démo - Agents de Code
 
 `Docker Agent` est un excellent Agent de Code. Extrêmement flexible.
 
@@ -154,7 +154,7 @@ $ docker agent run "coder"
 
 ---
 
-# Demo - Créer son Agent de Code
+# Démo - Créer son Agent de Code
 
 Définir un agent principal en `YAML`.
 
@@ -182,7 +182,7 @@ agents:
 
 ---
 
-# Demo - Ajouter un "Planificateur"
+# Démo - Ajouter un "Planificateur"
 
 Ajouter un sous-agent capable de préparer le travail en posant des questions
 à l'utilisateur.
@@ -214,7 +214,7 @@ agents:
 
 ---
 
-# Demo - Ajouter un "Bibliothécaire"
+# Démo - Ajouter un "Bibliothécaire"
 
 Pour faire des recherches Web ou obtenir des informations sur les APIs.
 
@@ -245,7 +245,7 @@ agents:
 
 ---
 
-# Demo - Version finale
+# Démo - Version finale
 
 Nous avons notre propre version d'un *Agent de Code*.
 
@@ -257,7 +257,7 @@ $ docker agent run "./coder.yaml"
 
 ---
 
-# Demo - Partage
+# Démo - Partage
 
 Cet agent est **facile à partager !** 
 
@@ -275,7 +275,7 @@ $ docker agent run "davidgageot135/coder:devoxx"
 
 ---
 
-# Demo - Un agent spécialisé
+# Démo - Un agent spécialisé
 
 On peut donc avoir un `Agent de Code` ultra-performant
 et à la fois très flexible.
@@ -291,7 +291,7 @@ et à la fois très flexible.
 
 ---
 
-# Demo - Un agent spécialisé
+# Démo - Un agent spécialisé
 
 Il y a des `APIs` tout autour de nous.
 
@@ -308,7 +308,7 @@ Il y a des `APIs` tout autour de nous.
 
 ---
 
-# Demo - Un agent spécialisé en Pokemons
+# Démo - Un agent spécialisé en Pokemons
 
 
 ```yaml
@@ -333,7 +333,7 @@ $ docker agent run "./pokemon.yaml"
 
 ---
 
-# Demo - Un agent spécialisé en Pokemons
+# Démo - Un agent spécialisé en Pokemons
 
 
 ```yaml
@@ -392,7 +392,7 @@ On écrit des `evals` = des cas de test:
 
 ---
 
-# Demo - Comment optimiser cet agent?
+# Démo - Comment optimiser cet agent?
 
 ## Lancement des evals
 
@@ -440,6 +440,33 @@ $ docker agent run "./eval-expert.yaml" "Optimize pokemon-plus.yaml"
 
 ---
 
+# Et ensuite?
+
+On modifie le `YAML` à la main et on boucle !
+
+## Optimisation automatique
+
+Bien mieux: On utilise un autre agent pour optimiser notre agent.
+
+```bash
+$ docker agent run "./eval-expert.yaml" "Optimize pokemon-plus.yaml"
+```
+
+## Résultat
+
+```diff
+$ diff pokemon-plus.yaml pokemon-plus-optimized.yaml
+
+>       Quand tu présentes des informations sur un Pokémon, inclus TOUJOURS l'URL vers sa page dans le Pokédex (ex: https://pokeapi.co/api/v2/pokemon/25/ pour Pikachu).
+>
+>       Quand tu compares plusieurs Pokémon dans un tableau récapitulatif, tu DOIS utiliser des emojis pour indiquer DEUX choses pour CHAQUE stat individuelle (PV, ATK, DEF, ATK Spé, DEF Spé, VIT) :
+>       - 🟢 à côté de la valeur du Pokémon qui a la MEILLEURE valeur pour cette stat
+>       - 🔴 à côté de la valeur du Pokémon qui a la PIRE valeur pour cette stat
+>       Tu dois TOUJOURS marquer à la fois le meilleur ET le pire pour chaque stat. Ne marque jamais seulement le meilleur sans le pire.
+```
+
+---
+
 # Go SDK
 
 On peut aller encore plus loin en combinant du `Yaml`, du `code` et le `SDK` de `Docker Agent`.
@@ -457,7 +484,7 @@ Image --> Go --> SDK Docker Agent --> Agent Yaml --> JSON
 
 ---
 
-# Demo - Lecture de Tickets
+# Démo - Lecture de Tickets
 
 ```yaml
 agents:
@@ -472,7 +499,7 @@ agents:
 
 ---
 
-# Demo - Lecture de Tickets
+# Démo - Lecture de Tickets
 
 ```yaml
 agents:
@@ -500,7 +527,7 @@ agents:
 
 ---
 
-# Demo - Lecture de Tickets
+# Démo - Lecture de Tickets
 
 ```yaml
 agents:

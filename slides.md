@@ -130,9 +130,30 @@ agents:
   root:
     model: anthropic/claude-sonnet-4-5
     instruction: Always answer by talking like a pirate.
-    welcome_message: |
-      Ahoy! I be yer pirate guide, ready to set sail on the seas o' knowledge!
-      What be yer quest? 🏴‍☠️
+```
+
+---
+
+# Démo - Agents de Code
+
+`Docker Agent` est un excellent Agent de Code. Extrêmement flexible.
+
+`Docker Agent` est codé principalement avec `Docker Agent`
+
++ Multi-agents
++ Multi-modèles
++ Skills
++ Built-in tools
++ MCP
++ AGENTS.md
++ Web search
++ RAG
++ ...
+
+## Une simple commande
+
+```bash
+$ docker agent run "coder"
 ```
 
 ---
@@ -160,6 +181,18 @@ $ docker agent run "coder"
 ```
 
 **Mais le mieux est de créer son propre agent.**
+
+---
+
+# Démo - Créer son Agent de Code
+
+Testons notre *Agent de Code* avant de découvrir comment le créer.
+
+## Une simple commande
+
+```bash
+$ docker agent run "./coder.yaml"
+```
 
 ---
 
@@ -250,18 +283,6 @@ agents:
       - type: fetch
       - type: mcp
         ref: docker:context7
-```
-
----
-
-# Démo - Version finale
-
-Nous avons notre propre version d'un *Agent de Code*.
-
-## Une simple commande
-
-```bash
-$ docker agent run "./coder.yaml"
 ```
 
 ---
@@ -494,6 +515,16 @@ Image --> Go --> SDK Docker Agent --> Agent Yaml --> JSON
 
 # Démo - Lecture de Tickets
 
+## Commencer par un agent YAML
+
+```bash
+$ zsh
+```
+
+---
+
+# Démo - Lecture de Tickets
+
 ```yaml
 agents:
   root:
@@ -545,10 +576,43 @@ agents:
       - type: filesystem
 ```
 
+---
+
+# Démo - Lecture de Tickets
+
+## Utiliser le SDG Go pour lancer l'agent
+
+```go
+llm, _ := provider.New(
+  ctx,
+  &latest.ModelConfig{Provider: "openai", Model: "gpt-5.4"},
+  environment.NewDefaultProvider(),
+  options.WithStructuredOutput(&latest.StructuredOutput{Name: "ticket", Schema: schema}),
+)
+
+human := agent.New(
+  "root",
+  "Your job is to read a receipt and extract the total price from it. You will be given the receipt as text. You should only return the total price in a structured format.",
+  agent.WithModel(llm),
+)
+
+humanTeam := team.New(team.WithAgents(human))
+
+rt, _ := runtime.New(humanTeam)
+
+...
+
+messages, err := rt.Run(ctx, sess)
+```
+
+---
+
+# Démo - Lecture de Tickets
+
 ## Lancement
 
 ```bash
-go run ./...
+$ go run -C ./ticket-reader . ticket.jpg && sleep
 ```
 
 ---
